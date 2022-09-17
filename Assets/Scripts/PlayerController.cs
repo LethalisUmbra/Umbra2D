@@ -7,9 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
     public float jumpForce;
-
+    public int score;
+         
     public Rigidbody2D rig;
     public SpriteRenderer sr;
+    public UIController ui;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
         rig.velocity = new Vector2(xInput * moveSpeed, rig.velocity.y);
 
-        if (xInput > 0) sr.flipX = false; else if (xInput < 0) sr.flipX = true;
+        if (rig.velocity.x > 0) sr.flipX = false; else if (rig.velocity.x < 0) sr.flipX = true;
 
         if (transform.position.y <= -6f) GameOver();
     }
@@ -44,5 +46,11 @@ public class PlayerController : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void AddScore(int value)
+    {
+        score += value;
+        ui.SetScoreText(score);
     }
 }
